@@ -12,6 +12,10 @@ export const pdfsReducer = (state, action) => {
       return { 
         pdfs: [action.payload, ...state.pdfs] 
       }
+    case 'DELETE_PDF':
+      return { 
+        pdfs: state.pdfs.filter((w) => w._id !== action.payload._id)
+      }
     default:
       return state
   }
