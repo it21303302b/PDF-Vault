@@ -1,5 +1,7 @@
 const express = require('express')
-const PDF = require('../models/pdfModel')
+const {
+    createPDF,
+} = require('../controllers/pdfController')
 
 const router = express.Router()
 
@@ -14,16 +16,7 @@ router.get('/:id', (req,res) =>{
 })
 
 //add pdfs
-router.post('/', async (req,res) =>{
-    const {title, discription} = req.body
-
-    try{
-        const pdf = await PDF.create({title, discription})
-        res.status(200).json(pdf)
-    }catch (error){
-        res.status(400).json({error: error.message})
-    }
-})
+router.post('/', createPDF)
 
 //delete pdfs
 router.delete('/:id', (req,res) =>{
