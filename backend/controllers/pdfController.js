@@ -29,10 +29,10 @@ const getPDF = async (req,res) =>{
 //add pdf
 
 const createPDF = async (req,res) =>{
-    const {title, discription} = req.body
+    const {title, description} = req.body
 
     try{
-        const pdf = await PDF.create({title, discription})
+        const pdf = await PDF.create({title, description})
         res.status(200).json(pdf)
     }catch (error){
         res.status(400).json({error: error.message})

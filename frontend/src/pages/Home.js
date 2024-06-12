@@ -1,6 +1,7 @@
 import { useEffect, useState }from 'react'
 
 import PdfDetails from '../components/pdfDetails'
+import PdfForm from '../components/pdfForm'
 
 const Home = () => {
     const [pdfs, serPDfs] = useState(null)
@@ -25,6 +26,7 @@ const Home = () => {
                     <PdfDetails key={pdf._id} pdf={pdf}/>
                 ))}
             </div>
+            <PdfForm/>
         </div>
     )
 }
