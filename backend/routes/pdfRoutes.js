@@ -1,19 +1,17 @@
 const express = require('express')
 const {
+    getAllPDFs,
+    getPDF,
     createPDF,
 } = require('../controllers/pdfController')
 
 const router = express.Router()
 
 //get all pdfs
-router.get('/', (req,res) =>{
-    res.json({mssge:'Get all PDFs'})
-})
+router.get('/', getAllPDFs)
 
 //get one pdfs
-router.get('/:id', (req,res) =>{
-    res.json({mssge:'Get one PDF'})
-})
+router.get('/:id', getPDF)
 
 //add pdfs
 router.post('/', createPDF)
