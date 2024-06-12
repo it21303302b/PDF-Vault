@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { usePDFContext } from '../hooks/usePDFContext'
 
 const PDFForm = () => {
+  const { dispatch } = usePDFContext()
+
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState(null)
@@ -11,22 +14,23 @@ const PDFForm = () => {
     const pdf = {title, description}
     
     const response = await fetch('/api/PDF', {
-      method: 'POST',
-      body: JSON.stringify(pdf),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        method: 'POST',
+        body: JSON.stringify(pdf),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
     const json = await response.json()
 
     if (!response.ok) {
       setError(json.error)
     }
     if (response.ok) {
-      setError(null)
-      setTitle('')
-      setDescription('')
-      console.log('new PDF added:', json)
+        setError(null)
+        setTitle('')
+        setDescription('')
+        console.log('new PDF added:', json)
+      dispatch({type: 'CREATE_PDF', payload: json})
     }
 
   }
