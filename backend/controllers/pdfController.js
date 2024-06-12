@@ -41,11 +41,49 @@ const createPDF = async (req,res) =>{
 
 //delete pdf
 
+const deletePDF = async (req,res) =>{
+    const {id} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res. status(404). json({error: 'No such PDF id'})
+    }
+
+    const pdf = await PDF.findOneAndDelete({_id:id})
+
+    if (!pdf) {
+        return res. status(404) .json({error: 'No such PDF'})
+    }
+        
+    res.status(200).json(pdf)
+
+}
+
 //update pdf
+
+const updatePDF = async (req,res) => {
+    const {id} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res. status(404). json({error: 'No such PDF id'})
+    }
+
+    const pdf = await PDF.findOneAndUpdate({_id:id} , {
+        ...req.body
+    })
+
+    if (!pdf) {
+        return res. status(404) .json({error: 'No such PDF'})
+    }
+        
+    res.status(200).json(pdf)
+
+}
 
 
 module.exports = {
     getAllPDFs,
     getPDF,
-    createPDF
+    createPDF,
+    deletePDF,
+    updatePDF
 }

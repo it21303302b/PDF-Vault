@@ -3,6 +3,8 @@ const {
     getAllPDFs,
     getPDF,
     createPDF,
+    deletePDF,
+    updatePDF
 } = require('../controllers/pdfController')
 
 const router = express.Router()
@@ -17,13 +19,9 @@ router.get('/:id', getPDF)
 router.post('/', createPDF)
 
 //delete pdfs
-router.delete('/:id', (req,res) =>{
-    res.json({mssge:'Delete PDFs'})
-})
+router.delete('/:id', deletePDF)
 
 //update pdfs
-router.patch('/:id', (req,res) =>{
-    res.json({mssge:'Update PDFs'})
-})
+router.patch('/:id', updatePDF)
 
 module.exports = router
