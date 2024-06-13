@@ -1,15 +1,19 @@
 import { useEffect } from 'react'
 import { usePDFContext } from '../hooks/usePDFContext'
+import {useAuthContext} from '../hooks/useAuthContext'
 
 import PdfDetails from '../components/pdfDetails'
 import PdfForm from '../components/pdfForm'
 
 const Home = () => {
   const { pdfs, dispatch } = usePDFContext() // Call usePDFContext as a function
+  const {user} = useAuthContext()
 
   useEffect(() => {
     const fetchPDFs = async () => {
-      const response = await fetch('/api/PDF')
+      const response = await fetch('/api/PDF' , {
+        headers: {'Authorization': `Bearer ${user.token}`},
+      })
       const json = await response.json()
 
       if (response.ok) {
@@ -17,8 +21,12 @@ const Home = () => {
       }
     }
 
-    fetchPDFs()
-  }, [dispatch])
+    if(user){
+      fetchPDFs()
+    }
+
+    
+  }, [dispatch, user])
 
   return (
     <div className="home">

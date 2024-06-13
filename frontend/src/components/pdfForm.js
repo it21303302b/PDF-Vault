@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { usePDFContext } from '../hooks/usePDFContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const PDFForm = () => {
   const { dispatch } = usePDFContext()
+  const {user} = useAuthContext()
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -12,13 +14,19 @@ const PDFForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
+
     const pdf = {title, description}
     
     const response = await fetch('/api/PDF', {
         method: 'POST',
         body: JSON.stringify(pdf),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         }
       })
     const json = await response.json()
