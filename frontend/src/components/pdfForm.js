@@ -7,6 +7,7 @@ const PDFForm = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState(null)
+  const [emptyFields,setEmptyfields] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -24,11 +25,13 @@ const PDFForm = () => {
 
     if (!response.ok) {
       setError(json.error)
+      setEmptyfields(json.emptyFields)
     }
     if (response.ok) {
         setError(null)
         setTitle('')
         setDescription('')
+        setEmptyfields([])
         console.log('new PDF added:', json)
       dispatch({type: 'CREATE_PDF', payload: json})
     }
@@ -44,6 +47,7 @@ const PDFForm = () => {
         type="text" 
         onChange={(e) => setTitle(e.target.value)} 
         value={title}
+        className={emptyFields.includes('title') ? 'error' : ''}
       />
 
       <label>Description (in kg):</label>
@@ -51,6 +55,7 @@ const PDFForm = () => {
         type="text" 
         onChange={(e) => setDescription(e.target.value)} 
         value={description}
+        className={emptyFields.includes('description') ? 'error' : ''}
       />
 
       <button>Add PDF</button>

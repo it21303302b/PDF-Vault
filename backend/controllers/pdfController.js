@@ -31,6 +31,19 @@ const getPDF = async (req,res) =>{
 const createPDF = async (req,res) =>{
     const {title, description} = req.body
 
+    let emptyFields = []
+
+    if (!title) {
+        emptyFields.push('title')
+    }
+    if (!description) {
+        emptyFields.push('description')
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
+    }
+
+
     try{
         const pdf = await PDF.create({title, description})
         res.status(200).json(pdf)
