@@ -1,5 +1,8 @@
 import { usePDFContext } from "../hooks/usePDFContext"
 
+// date fns
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+
 const PdfDetails = ({ pdf }) => {
   const { dispatch } = usePDFContext() // Call usePDFContext as a function
 
@@ -18,8 +21,8 @@ const PdfDetails = ({ pdf }) => {
     <div className="pdf-details">
       <h4>{pdf.title}</h4>
       <p>{pdf.description}</p>
-      <p>{pdf.createdAt}</p>
-      <span onClick={handleClick}>delete</span>
+      <p>{formatDistanceToNow(new Date(pdf.createdAt), { addSuffix: true })}</p>
+      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
     </div>
   )
 }
