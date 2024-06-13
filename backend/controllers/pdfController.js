@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 
 //get all pdfs
 const getAllPDFs = async (req, res) => {
-    const pdfs = await PDF.find({}).sort({createdAt: -1})
+    const user_id = req.user._id
+
+    const pdfs = await PDF.find({user_id}).sort({createdAt: -1})
     
     res.status(200). json(pdfs)
 }
@@ -45,7 +47,8 @@ const createPDF = async (req,res) =>{
 
 
     try{
-        const pdf = await PDF.create({title, description})
+        const user_id = req.user ._id
+        const pdf = await PDF.create({title, description, user_id})
         res.status(200).json(pdf)
     }catch (error){
         res.status(400).json({error: error.message})
