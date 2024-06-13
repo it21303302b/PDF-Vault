@@ -1,31 +1,31 @@
-const express = require('express')
+const express = require('express');
 const {
-    getAllPDFs,
-    getPDF,
-    createPDF,
-    deletePDF,
-    updatePDF
-} = require('../controllers/pdfController')
-const requireAuth = require('../middleware/requireAuth')
+  getAllPDFs,
+  getPDF,
+  createPDF,
+  deletePDF,
+  updatePDF
+} = require('../controllers/pdfController');
+const requireAuth = require('../middleware/requireAuth');
 
-const router = express.Router()
+const router = express.Router();
 
-// require auth for all workout routes
-router.use(requireAuth)
+// require auth for all pdf routes
+router.use(requireAuth);
 
-//get all pdfs
-router.get('/', getAllPDFs)
+// get all pdfs
+router.get('/', getAllPDFs);
 
-//get one pdfs
-router.get('/:id', getPDF)
+// get one pdf
+router.get('/:id', getPDF);
 
-//add pdfs
-router.post('/', createPDF)
+// add pdf
+router.post('/', createPDF);
 
-//delete pdfs
-router.delete('/:id', deletePDF)
+// delete pdf
+router.delete('/:id', deletePDF);
 
-//update pdfs
-router.patch('/:id', updatePDF)
+// update pdf
+router.patch('/:id', updatePDF);
 
-module.exports = router
+module.exports = router;
